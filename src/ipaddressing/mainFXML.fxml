@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="586.9998779296875" prefWidth="901.9998779296875" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="ipaddressing.mainFXMLController">
+  <children>
+    <SplitPane dividerPositions="0.6166666666666667" focusTraversable="true" layoutX="0.0" prefHeight="514.9998779296875" prefWidth="901.9998779296875" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="72.0">
+      <items>
+        <AnchorPane fx:id="leftPnae" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+          <children>
+            <ScrollPane fitToHeight="false" pannable="false" prefHeight="513.0" prefWidth="552.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <content>
+                <AnchorPane id="Content" fx:id="leftRoot" minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="537.0">
+                  <children>
+                    <VBox id="partOneVBox" fx:id="leftVBox" alignment="TOP_LEFT" layoutX="12.0" layoutY="0.0" prefHeight="600.0" prefWidth="525.0">
+                      <children>
+                        <Label prefHeight="45.0" prefWidth="293.0" text="Main Valid IP Address(Decimal/Binary):" />
+                        <TextField fx:id="ipTF" prefHeight="45.0" prefWidth="537.0" />
+                        <Label prefHeight="45.0" text="CIDR(Number Of Subnet Bits):" />
+                        <TextField fx:id="cidrTF" prefHeight="45.0" prefWidth="537.0" />
+                        <Label prefHeight="45.0" text="Number Of Router(s) In This Network:" />
+                        <TextField fx:id="routersTF" prefHeight="45.0" prefWidth="525.0" />
+                        <Label prefHeight="45.0" text="Number Of Connection Between Routers (EDGES):" />
+                        <TextField fx:id="conBtnRoutersTF" prefHeight="45.0" prefWidth="525.0" />
+                        <Label prefHeight="45.0" text="Number Of Maximum Devices On A Single Lan:" />
+                        <TextField fx:id="maxDevicesTF" prefHeight="45.0" prefWidth="525.0" />
+                        <Button mnemonicParsing="false" onAction="#partOneBtnAction" prefHeight="70.0" prefWidth="525.0" text="Next" />
+                      </children>
+                    </VBox>
+                  </children>
+                </AnchorPane>
+              </content>
+            </ScrollPane>
+          </children>
+        </AnchorPane>
+        <AnchorPane fx:id="rightPane" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
+      </items>
+    </SplitPane>
+  </children>
+</AnchorPane>
