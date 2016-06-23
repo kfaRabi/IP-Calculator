@@ -33,15 +33,4 @@ public class IPAddressing extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
 }
-
-/*
-Inputs:
-    - ip address
-    - Digits available For Host
-    - No. Of Routers
-    - No. Of connections(edges) btn routers
-    - No. Of LANs in Router y
-    - No. Of Devices In Lan x Of Router y
-*/
