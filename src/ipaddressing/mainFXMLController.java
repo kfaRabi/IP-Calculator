@@ -60,9 +60,11 @@ public class mainFXMLController implements Initializable {
     private int subnetLen;
     private int noOfRouters;
     private int conBtnRouters;
+    private int parentsLen;
     //private int[][] routersGraph = new int[500][500]; // 0-> new index value, then other routers numbers those have connection with this router 
     private int[][] lansGraph;// 0-> how many lan in this router, 1,2,...,n -> number of devices in each lan
-    private ArrayList<LAN> col;
+    private ArrayList<LAN> colLan;
+    private ArrayList<NetAdInfo> colNetAd;
     private int hostPortionLen;
     private String errorMsg;
     @FXML
@@ -71,7 +73,8 @@ public class mainFXMLController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        col = new ArrayList<LAN>();
+        colLan = new ArrayList<LAN>();
+        colNetAd = new ArrayList<NetAdInfo>();
         noOfLansTFs = new TextField[510];
         noOfDevicesTFs = new TextField[510][100];
         lansGraph = new int[100][5];
@@ -86,17 +89,34 @@ public class mainFXMLController implements Initializable {
 
     }    
 
+    private void callAllTheFunctions(){
+        if(!validIP()){
+            errorMsgLbl.setText(errorMsg);
+        }
+        else errorMsgLbl.setText("OK!");
+        if(adjustNetAdd(120)){
+            System.out.println("nwe len: "+subnetLen);
+        }
+        else System.out.println("not possible");
+        String newIP = toBinaryIP(ip);
+        ArrayList<NetAdInfo> list = new ImportantFunctions().binarySubnet(newIP, parentsLen ,subnetLen);
+        System.out.println("size: "+list.size());
+        for(NetAdInfo l : list){
+            System.out.println(l.getNetAd());
+        }
+        
+    }
+    
     @FXML
     private void partOneBtnAction(ActionEvent event) {
         ip = ipTF.getText();
         subnetLen = Integer.parseInt(cidrTF.getText());
         noOfRouters = Integer.parseInt(routersTF.getText());
         conBtnRouters = Integer.parseInt(conBtnRoutersTF.getText());
-        if(!validIP()){
-            errorMsgLbl.setText(errorMsg);
-        }
-        else errorMsgLbl.setText("OK!");
+        hostPortionLen = 32 - subnetLen;
+        parentsLen = subnetLen;
         addPartTwoElements();
+        callAllTheFunctions();
     }
     
     private void addPartTwoElements(){
@@ -159,11 +179,11 @@ public class mainFXMLController implements Initializable {
             for(int j = 1; j <= lansGraph[i][0]; j++){
                 int n = Integer.parseInt(noOfDevicesTFs[i][j].getText());
                 LAN lan = new LAN(i, j, n);
-                col.add(lan);
+                colLan.add(lan);
             }
         }
         //Collections.sort(col,(la , lb)-> lb.getNoOfDevices() - la.getNoOfDevices());
-        Collections.sort(col,(la , lb)-> {
+        Collections.sort(colLan,(la , lb)-> {
             int difD = lb.getNoOfDevices() - la.getNoOfDevices();
             int difR = la.getRoutersNo() - lb.getRoutersNo();
             if(difD != 0)
@@ -175,13 +195,6 @@ public class mainFXMLController implements Initializable {
         callAllTheFunctions();
     }
     
-    private void callAllTheFunctions(){
-        if(!validIP()){
-            errorMsgLbl.setText(errorMsg);
-        }
-        else errorMsgLbl.setText("OK!");
-    }
-    
     private boolean validIP(){
         StringTokenizer str = new StringTokenizer(ip, ".");
         if(ip.length() > 15){
@@ -189,10 +202,14 @@ public class mainFXMLController implements Initializable {
                 errorMsg = "Invalid IP Address - TOO BIG. SHOULD CONTAIN EXACTLY 8 DIGITS ON EACH BLOCK";
                 return false;
             }
+            if(ip.length() < 35){
+                errorMsg = "Invalid IP Address - TOO SHORT AS BINARY ADDRESS. SHOULD CONTAIN EXACTLY 8 DIGITS ON EACH BLOCK";
+                return false;
+            }
             for(int i = 0; i < ip.length(); i++){
                 int x = ip.charAt(i) - '0';
                 if(x>1){
-                    errorMsg = "Invalid IP Address - ALl IP DIGITS SHOULD BE ONLY BINRAY OR ONLY DECIAML";
+                    errorMsg = "Invalid IP Address - All IP DIGITS SHOULD BE ONLY BINRAY OR ONLY DECIAML";
                     return false;
                 }
             }
@@ -208,6 +225,10 @@ public class mainFXMLController implements Initializable {
                     errorMsg = "Invalid IP Address - LEADING ZERO(S). ALl IP DIGITS SHOULD BE ONLY BINRAY OR ONLY DECIAML";
                     return false;
                 }
+                if(tkn.length() > 3){
+                    errorMsg = "Invalid IP Address - TOO MANY DIGITS IN ONE BLOCK. SHOULD NOT BE MORE THAN 3 IN DECIMAL FORMAT";
+                    return false;
+                }
             }
             
         }
@@ -220,8 +241,48 @@ public class mainFXMLController implements Initializable {
         return true;
     } 
     
+    private boolean adjustNetAdd(int required){
+        int tmp = hostPortionLen, cnt = 0;
+        while(((int)(Math.pow(2.0, (double)tmp))) > required){
+            tmp--;
+            cnt++;
+        }
+        if(((int)(Math.pow(2.0, (double)tmp+1))) >= required){
+            subnetLen += (cnt-1);
+            return true;
+        }
+        return false;
+    }
+    
+    private String toBinaryIP(String inp){
+        //System.out.println("got call");
+        String full = ""; 
+        String s;
+        StringTokenizer str = new StringTokenizer(inp, ".");
+        while(str.hasMoreTokens()){
+            s = str.nextToken().toString();
+            full += dToB(s);
+            //System.out.println(s+ " ... "+dToB(s));
+        }
+        return full;
+    }
+    
     private void adjustHeight(double h){
         leftRoot.setMinHeight(h);
         leftVBox.setMinHeight(h);
+    }
+    
+    private String dToB(String s){
+        int[] val = {128, 64, 32, 16, 8, 4, 2, 1};
+        char[] arr = new char[8];
+        int block = Integer.parseInt(s), sum = 0;
+        for(int i = 0; i < 8; i++){
+            if((sum + val[i]) <= block){
+                sum += val[i];
+                arr[i] =  '1';
+            }
+            else arr[i] = '0';
+        }
+        return String.valueOf(arr);
     }
 }
