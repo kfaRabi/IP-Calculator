@@ -5,10 +5,11 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="586.9998779296875" prefWidth="901.9998779296875" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="ipaddressing.mainFXMLController">
+<AnchorPane id="AnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-1.0" minWidth="-1.0" prefHeight="586.9998779296875" prefWidth="1024.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="ipaddressing.mainFXMLController">
   <children>
-    <SplitPane dividerPositions="0.6166666666666667" focusTraversable="true" layoutX="0.0" prefHeight="514.9998779296875" prefWidth="901.9998779296875" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="72.0">
+    <SplitPane dividerPositions="0.5557729941291585" focusTraversable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-1.0" prefHeight="-1.0" prefWidth="1024.0" AnchorPane.bottomAnchor="57.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="72.0">
       <items>
         <AnchorPane fx:id="leftPnae" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
           <children>
@@ -18,9 +19,9 @@
                   <children>
                     <VBox id="partOneVBox" fx:id="leftVBox" alignment="TOP_LEFT" layoutX="12.0" layoutY="0.0" prefHeight="600.0" prefWidth="525.0">
                       <children>
-                        <Label prefHeight="45.0" prefWidth="293.0" text="Main Valid IP Address(Decimal/Binary):" />
+                        <Label prefHeight="45.0" prefWidth="293.0" text="Main Valid IP Address(Decimal Only):" />
                         <TextField fx:id="ipTF" prefHeight="45.0" prefWidth="537.0" promptText="" text="192.168.2.0" />
-                        <Label prefHeight="45.0" text="CIDR(Number Of Subnet Bits):" />
+                        <Label prefHeight="45.0" text="CIDR(Number Of Subnet Bits ):" />
                         <TextField fx:id="cidrTF" prefHeight="45.0" prefWidth="537.0" text="23" />
                         <Label prefHeight="45.0" text="Number Of Router(s) In This Network:" />
                         <TextField fx:id="routersTF" prefHeight="45.0" prefWidth="525.0" text="2" />
@@ -35,9 +36,32 @@
             </ScrollPane>
           </children>
         </AnchorPane>
-        <AnchorPane fx:id="rightPane" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
+        <AnchorPane fx:id="rightPane" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+          <children>
+            <ScrollPane prefHeight="456.9998779296875" prefWidth="437.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="0.0">
+              <content>
+                <AnchorPane id="Content" fx:id="rightRoot" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="449.0" prefWidth="437.0">
+                  <children>
+                    <VBox fx:id="rightVBox" layoutX="13.0" layoutY="0.0" prefHeight="441.0" prefWidth="424.0" />
+                  </children>
+                </AnchorPane>
+              </content>
+            </ScrollPane>
+          </children>
+        </AnchorPane>
       </items>
     </SplitPane>
-    <Label fx:id="errorMsgLbl" layoutX="14.0" layoutY="28.0" text="" />
+    <Label fx:id="errorMsgLbl" prefWidth="736.0" text="" AnchorPane.bottomAnchor="23.0" AnchorPane.leftAnchor="16.0" />
+    <Label text="Developed By Kazi Fozle Azim Rabi" AnchorPane.bottomAnchor="31.0" AnchorPane.rightAnchor="15.0" />
+    <Label text="fozleazimrabi2@gmail.com" AnchorPane.bottomAnchor="18.0" AnchorPane.rightAnchor="108.0">
+      <font>
+        <Font size="10.0" />
+      </font>
+    </Label>
+    <Label text="IP CALCULATOR" textFill="#3385ff" AnchorPane.leftAnchor="406.0" AnchorPane.rightAnchor="352.0" AnchorPane.topAnchor="20.0">
+      <font>
+        <Font name="SansSerif Bold" size="30.0" />
+      </font>
+    </Label>
   </children>
 </AnchorPane>

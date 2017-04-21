@@ -12,13 +12,7 @@ package ipaddressing;
 public class LAN{
     private int routersNo;
     private int LANNo;
-//    private int CIDR;
     private int noOfDevices;
-//    private String netAd;
-//    private String firstHost;
-//    private String lastHost;
-//    private String brodAd;
-//    private String subnet;
     
     private NetAdInfo netInfo;
     
